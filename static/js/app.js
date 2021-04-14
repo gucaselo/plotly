@@ -24,42 +24,106 @@ d3.json("../data/samples.json").then((data) => {
     // // console.log(otuLabels[0])
 
 
+    function findId(value) {
+        var id = d3.select('#selDataset').property("value")
+        return value.id === id
+    };
+
      // User ID input
-    
     var userSelection = d3.select('#selDataset')
     // .attr('value')
-    userSelection.on('change', optionChanged)
-    function optionChanged () {
+    d3.select(window).on('load', initialLoad(samples))
+    // userSelection.on('load', initialLoad);
+    userSelection.on('change', optionChanged(samples, userSelection));
 
-        console.log(userSelection.property("value"))
+    function initialLoad (samples) {
+        
+        // // Prevent default behavior 
+        // d3.event.preventDefault();
+
+        // Get all Sample IDs from dataset
+        datasetId = samples.map(object => object.id);
+
+        // Update HTML by adding option tag with id values
+        Object.values(datasetId).forEach((value) => {
+            var option = d3.select('select').append('option');
+            option.attr('value', value)
+            option.text(value)
+    })
+
+    }
+
+
+    function optionChanged(samples, input) {
+        // console.log(userSelection.property("value"))
+        // var input = d3.select('#selDataset')
+        var userSelection = input.property("value")
+        var idData = samples.filter(findId);
+        console.log(idData)
+        // console.log(samples)
+
+        var sortedData = idData.sort(function (a, b){
+            return b.sample_values - a.sample_values;
+        });
+        // console.log(sortedData)
+
+    //     // Get all Sample IDs from dataset
+    //     datasetId = samples.map(object => object.id);
+
+    //     // Update HTML by adding option tag with id values
+    //     Object.values(datasetId).forEach((value) => {
+    //         var option = d3.select('select').append('option');
+    //         option.attr('value', value)
+    //         option.text(value)
+
+    // })
+            // Slice values
+        start = 0;
+        end = 10;
+        
+        // console.log(sortedData[0].otu_ids.slice(0, 10))
+
+        //Slice data for index 0 and grab top 10 values
+        var slicedSamples = sortedData[0].sample_values.slice(start, end);
+        var slicedOtu = sortedData[0].otu_ids.slice(start, end);
+
+        var trace1 = {
+            x: slicedSamples,
+            y: slicedOtu,
+            // text: (function (d) {
+            //     return `OTU ${d}`;
+            // }),
+            type: "bar",
+            orientation: 'h'
+            // width: 50
+        };
+
+        // data
+        data = [trace1];
+
+        var layout = {
+            title: 'Top 10 OTUs pero individual ID'
+        };
+
+        // Render the plot to the div tag with id "plot"
+        Plotly.newPlot("bar", data, layout); 
+
+
     }
 
    
 
-    function findId(value) {
-        return value.id === '941'
-    };
+
     
-    idData = samples.filter(findId);
+    
 
     // console.log(samples.filter(findId));
 
-    var sortedData = idData.sort(function (a, b){
-        return b.sample_values - a.sample_values;
-    });
+
 
     // Object.values(samples).forEach(value => console.log(value.id));
 
-    // Get all Sample IDs from dataset
-    datasetId = samples.map(object => object.id);
 
-    // Update HTML by adding option tag with id values
-    Object.values(datasetId).forEach((value) => {
-        var option = d3.select('select').append('option');
-        option.attr('value', value)
-        option.text(value)
-
-    })
 
 
     
@@ -114,40 +178,11 @@ d3.json("../data/samples.json").then((data) => {
 //     // console.log(slicedOtu);
 // ////////////////////////////////////////////////////////////////////   
 
-    // Slice values
-    start = 0;
-    end = 10;
     
-    // console.log(sortedData[0].otu_ids.slice(0, 10))
-
-    //Slice data for index 0 and grab top 10 values
-    var slicedSamples = sortedData[0].sample_values.slice(start, end);
-    var slicedOtu = sortedData[0].otu_ids.slice(start, end);
-
-    var trace1 = {
-        x: slicedSamples,
-        y: slicedOtu,
-        // text: (function (d) {
-        //     return `OTU ${d}`;
-        // }),
-        type: "bar",
-        orientation: 'h'
-        // width: 50
-    };
-
-    // data
-    data = [trace1];
-
-    var layout = {
-        title: 'Top 10 OTUs pero individual ID'
-    };
-
-   // Render the plot to the div tag with id "plot"
-  Plotly.newPlot("bar", data, layout); 
 
 });
 
-{/* <option value=""> 941</option> */}
+// {/* <option value=""> 941</option> */}
 
 // d3.json("data/samples.json", function(error, data) {
 //     console.log(data);
