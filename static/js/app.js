@@ -2,26 +2,39 @@ d3.json("../data/samples.json").then((data) => {
     // console.log(data.names[0]);
     var samples = data.samples;
 
-    var ids = samples.map(function(name) {
-        // for (i=0; i<names.lenght; i++)
-        return name.id
-    });
-    // console.log(ids[0]);
+    // var ids = samples.map(function(name) {
+    //     // for (i=0; i<names.lenght; i++)
+    //     return name.id
+    // });
+    // // console.log(ids[0]);
 
-    var sampleValues = samples.map(function(values) {
-        return values.sample_values
-    });
-    // console.log(sampleValues[0])
+    // var sampleValues = samples.map(function(values) {
+    //     return values.sample_values
+    // });
+    // // console.log(sampleValues[0])
         
-    var otuIds = samples.map(function(otu) {
-        return otu.otu_ids
-    });
-    // console.log(otuIds[0])
+    // var otuIds = samples.map(function(otu) {
+    //     return otu.otu_ids
+    // });
+    // // console.log(otuIds[0])
 
-    var otuLabels = samples.map(function(labels) {
-        return labels.otu_labels
-    });
-    // console.log(otuLabels[0])
+    // var otuLabels = samples.map(function(labels) {
+    //     return labels.otu_labels
+    // });
+    // // console.log(otuLabels[0])
+
+
+     // User ID input
+    
+    var userSelection = d3.select('#selDataset')
+    // .attr('value')
+    userSelection.on('change', optionChanged)
+    function optionChanged () {
+
+        console.log(userSelection.property("value"))
+    }
+
+   
 
     function findId(value) {
         return value.id === '941'
