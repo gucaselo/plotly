@@ -26,15 +26,20 @@ d3.json("../data/samples.json").then((data) => {
 
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
+        console.log(id)
         return value.id === id
     };
 
      // User ID input
-    var userSelection = d3.select('#selDataset')
+    var userSelection = d3.select('#selDataset');
     // .attr('value')
-    d3.select(window).on('load', initialLoad(samples))
-    // userSelection.on('load', initialLoad);
+    d3.select(window).on('load', initialLoad(samples));
     userSelection.on('change', optionChanged(samples, userSelection));
+
+    // userSelection.on('change', function() {
+    //     selection = d3.select('#selDataset').property('value');
+    //     optionChanged(samples, selection);
+    // });
 
     function initialLoad (samples) {
         
@@ -59,8 +64,9 @@ d3.json("../data/samples.json").then((data) => {
         // var input = d3.select('#selDataset')
         var userSelection = input.property("value")
         var idData = samples.filter(findId);
-        console.log(idData)
+        // console.log(idData)
         // console.log(samples)
+        console.log(d3.select('#selDataset').property("value"))
 
         var sortedData = idData.sort(function (a, b){
             return b.sample_values - a.sample_values;
@@ -84,12 +90,16 @@ d3.json("../data/samples.json").then((data) => {
         // console.log(sortedData[0].otu_ids.slice(0, 10))
 
         //Slice data for index 0 and grab top 10 values
-        var slicedSamples = sortedData[0].sample_values.slice(start, end);
-        var slicedOtu = sortedData[0].otu_ids.slice(start, end);
+        var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
+        var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
+        console.log(slicedOtu)
 
         var trace1 = {
             x: slicedSamples,
-            y: slicedOtu,
+            y: slicedOtu.map(function (d) {
+                return `OTU ${d}`
+            }),
+            // y: slicedOtu.map(d => `OTU ${d} `),
             // text: (function (d) {
             //     return `OTU ${d}`;
             // }),
@@ -108,12 +118,7 @@ d3.json("../data/samples.json").then((data) => {
         // Render the plot to the div tag with id "plot"
         Plotly.newPlot("bar", data, layout); 
 
-
     }
-
-   
-
-
     
     
 
