@@ -147,15 +147,10 @@ d3.json("../data/samples.json").then((data) => {
     function optionChanged() {
         var input = +d3.select(this).property("value")
         console.log(typeof(input))
-        // var samples = data.samples;
-        // var metadata = data.metadata;
-        console.log(`samples: ${samples}`)
 
         d3.select('#sample-metadata').html('');
-        // d3.select("svg").remove();
         d3.select('#bar').html('');
 
-        // var userSelection = input.property("value")
         var idData = samples.filter(findId);
         console.log(idData);
 
@@ -173,6 +168,7 @@ d3.json("../data/samples.json").then((data) => {
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
         console.log(slicedOtu)
 
+        //---------------------Bar Plot ---------------------------//
         var trace1 = {
             x: slicedSamples,
             y: slicedOtu.map(function (d) {
@@ -203,7 +199,49 @@ d3.json("../data/samples.json").then((data) => {
         Plotly.newPlot("bar", data, layout); 
         // Plotly.restyle("bar", data, layout)
 
+        //---------------------Bubble Chart ---------------------------//
+        var randomColor = Math.floor(Math.random()*16777215).toString(16);
+        // slicedOtu.forEach((value) => {
+        //     randomColor = Math.floor(Math.random()*16777215).toString(16)
+        //     console.log(`#${randomColor}`)
+        // });
+        // function randomColor(data) {
+        //     var colors = [];
+        //     for (i=0; i < data.length; i++) {
+        //         randomColor = Math.floor(Math.random()*16777215).toString(16)
+        //         colors.push(`#${randomColor}`);
+        //         console.log(colors)
+        //         return colors
+        // }
+        // };
 
+        var bubbleTrace1 = {
+            x: slicedOtu,
+            y: slicedSamples,
+            mode: 'markers',
+            marker: {
+                color: slicedOtu.map(a => `#${randomColor}`), 
+                // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)',
+                //         'rgb(255, 65, 54)', 'rgb(93, 164, 214)', 'rgb(255, 144, 14)',
+                //         'rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)'],
+                size: slicedSamples,
+            },
+        };
+        // console.log(trace1)
+
+        // data
+        data = [bubbleTrace1];
+        // console.log(data)
+
+        var layout = {
+            title: 'Bubble Chart'
+        };
+
+        // Render the plot to the div tag with id "plot"
+        Plotly.newPlot("bubble", data, layout); 
+
+
+        //--------------------- Demographhic Info ---------------------------//
         // Update HTML by adding metadata info
         var list = d3.select('#sample-metadata').append('ul');
         list.style('list-style-type', 'none');
