@@ -94,12 +94,21 @@ d3.json("../data/samples.json").then((data) => {
     // Update HTML by adding metadata info
     var list = d3.select('#sample-metadata').append('ul');
     list.style('list-style-type', 'none');
+    list.attr('class', 'list-group');
     metadata.forEach((meta) => {
         // console.log(typeof(meta.id))
         if (meta.id === 941) {
             Object.entries(meta).forEach(([key, value]) => {
                 console.log(`${key} : ${value}`)
                 var data = list.append('li');
+                data.attr('class', 'list-group-item');
+                data.style('font-size', '11px');
+                data.style('font-weight', 'bold');
+                data.style('text-transform', 'capitalize');
+                // if (value.ethnicity) {
+                //     splitValue = value.ethnicity.split("/");
+                //     data.text(`${key} : ${splitValue[0]}`);
+                // }
                 data.text(`${key} : ${value}`);
             });
         }   
