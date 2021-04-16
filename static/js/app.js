@@ -143,6 +143,7 @@ d3.json("../data/samples.json").then((data) => {
         //---------------------Bubble Chart ---------------------------//
         var sortedSamples = sortedData[0].sample_values;
         var sortedOtu = sortedData[0].otu_ids;
+        var sortedOtuLabels = sortedData[0].otu_labels;
         // var  = Math.floor(Math.random()*16777215).toString(16);
         function randomColors(n) {
             var randomColorsArray = [];
@@ -158,6 +159,7 @@ d3.json("../data/samples.json").then((data) => {
         var bubbleTrace1 = {
             x: sortedOtu,
             y: sortedSamples,
+            text: sortedOtuLabels,
             mode: 'markers',
             marker: {
                 color: randomColor,
@@ -238,6 +240,7 @@ d3.json("../data/samples.json").then((data) => {
         //---------------------Bubble Chart ---------------------------//
         var sortedSamples = sortedData[0].sample_values;
         var sortedOtu = sortedData[0].otu_ids;
+        var sortedOtuLabels = sortedData[0].otu_labels;
         // var  = Math.floor(Math.random()*16777215).toString(16);
         function randomColors(n) {
             var randomColorsArray = [];
@@ -253,6 +256,7 @@ d3.json("../data/samples.json").then((data) => {
         var bubbleTrace1 = {
             x: sortedOtu,
             y: sortedSamples,
+            text: sortedOtuLabels,
             mode: 'markers',
             marker: {
                 color: randomColor,
