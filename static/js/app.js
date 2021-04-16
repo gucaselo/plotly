@@ -29,7 +29,7 @@ d3.json("../data/samples.json").then((data) => {
 
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
-        console.log(`filter id: ${id}`)
+        console.log(`filter id: ${typeof(id)}`)
         return value.id === id
     };
 
@@ -43,11 +43,15 @@ d3.json("../data/samples.json").then((data) => {
     //     console.log(value);
     // });
     /////////////////////////
-    
+
     d3.select(window).on('load', initialLoad(data));
     userSelection.on('change', optionChanged);
 
-    function initialLoad (data) {
+    
+    //--------------------------------------------------------//
+    //                Function Initial Page Load              //
+    //--------------------------------------------------------//
+    function initialLoad(data) {
         counter = 0
         // var input = d3.select(this).property("value")
         // var idData = samples.filter(findId);
@@ -74,6 +78,10 @@ d3.json("../data/samples.json").then((data) => {
     });
         // This returned a string
         // console.log(typeof(d3.select('#selDataset').property("value")))
+
+
+
+         //--------------------Demographic Info ---------------------------//
 
         // Grab default ID and change to Integer (it returned as a string) by using "+"
         defaultID = +d3.select('#selDataset').property("value")
@@ -102,9 +110,7 @@ d3.json("../data/samples.json").then((data) => {
             }   
         });
 
-        //--------------------------------------------------------//
-        //                        Bar Plot                        //
-        //--------------------------------------------------------//
+        //---------------------Bar Plot ---------------------------//
         var idData = samples.filter(findId);
 
         var sortedData = idData.sort(function (a, b){
@@ -135,14 +141,17 @@ d3.json("../data/samples.json").then((data) => {
         Plotly.newPlot("bar", data, layout); 
     }
 
-
+    //--------------------------------------------------------//
+    //                Function Subject ID Change              //
+    //--------------------------------------------------------//
     function optionChanged(samples) {
-        var input = d3.select(this).property("value")
-        console.log(input)
+        var input = +d3.select(this).property("value")
+        console.log(typeof(input))
         var samples = data.samples;
         var metadata = data.metadata;
 
         d3.select('#sample-metadata').html('');
+        // d3.select("svg").remove();
         d3.select('#bar').html('');
 
         // var userSelection = input.property("value")
@@ -192,6 +201,30 @@ d3.json("../data/samples.json").then((data) => {
         // Render the plot to the div tag with id "plot"
         Plotly.newPlot("bar", data, layout); 
         // Plotly.restyle("bar", data, layout)
+
+
+        // Update HTML by adding metadata info
+        var list = d3.select('#sample-metadata').append('ul');
+        list.style('list-style-type', 'none');
+        list.attr('class', 'list-group');
+        metadata.forEach((meta) => {
+            // console.log(typeof(meta.id))
+            if (meta.id === input) {
+                Object.entries(meta).forEach(([key, value]) => {
+                    console.log(`${key} : ${value}`)
+                    var data = list.append('li');
+                    data.attr('class', 'list-group-item');
+                    data.style('font-size', '9px');
+                    data.style('font-weight', 'bold');
+                    data.style('text-transform', 'capitalize');
+                    // if (key.lowered() === 'ethnicity') {
+                    //     splitValue = value.split("/");
+                    //     data.text(`${key} : ${splitValue[0]}`);
+                    // }
+                    data.text(`${key} : ${value}`);
+                });
+            }   
+        });
 
     } 
 
