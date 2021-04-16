@@ -58,20 +58,20 @@ d3.json("../data/samples.json").then((data) => {
         // Get all metadata info
         // metadataInfo = metadata.map(object => object.metadata)
         
-        metadataInfo = metadata.map((value) => {
-            // if (value.id === '940') {
-            //     return value
-            // }
-            return value.id
+        // metadataInfo = metadata.map((value) => {
+        //     // if (value.id === 940) {
+        //     //     return value
+        //     // }
+        //     // return value.id
             
-        })
+        // })
         // 100% working 
-        metadata.forEach((meta) => {
-            // console.log(typeof(meta.id))
-            if (meta.id === 941) {
-                Object.entries(meta).forEach(([key, value]) => console.log(`${key} : ${value}`));
-            }   
-        });
+        // metadata.forEach((meta) => {
+        //     // console.log(typeof(meta.id))
+        //     if (meta.id === 941) {
+        //         Object.entries(meta).forEach(([key, value]) => console.log(`${key} : ${value}`));
+        //     }   
+        // });
          
         
         // metadataInfo = metadata.map(object => {
@@ -91,6 +91,19 @@ d3.json("../data/samples.json").then((data) => {
             option.text(value)
     });
 
+    // Update HTML by adding metadata info
+    var list = d3.select('#sample-metadata').append('ul');
+    list.style('list-style-type', 'none');
+    metadata.forEach((meta) => {
+        // console.log(typeof(meta.id))
+        if (meta.id === 941) {
+            Object.entries(meta).forEach(([key, value]) => {
+                console.log(`${key} : ${value}`)
+                var data = list.append('li');
+                data.text(`${key} : ${value}`);
+            });
+        }   
+    });
         // Update HTML by adding metadata info
     //     var list = d3.select('#sample-metadata').append('ul');
     //     list.style('list-style-type', 'none');
