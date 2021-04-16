@@ -2,6 +2,7 @@ d3.json("../data/samples.json").then((data) => {
     // console.log(data.names[0]);
     var samples = data.samples;
     var metadata = data.metadata;
+    
     // data.metadata.forEach((d) =>console.log(d.id === '940'))
 
     // var ids = samples.map(function(name) {
@@ -57,7 +58,9 @@ d3.json("../data/samples.json").then((data) => {
     // });
 
     function initialLoad (data) {
-        
+        counter = 0
+        // var input = d3.select(this).property("value")
+        // var idData = samples.filter(findId);
         // // Prevent default behavior 
         // d3.event.preventDefault();
 
@@ -71,32 +74,43 @@ d3.json("../data/samples.json").then((data) => {
         // Update HTML by adding option tag with id values
         Object.values(datasetId).forEach((value) => {
             var option = d3.select('select').append('option');
-            option.attr('value', value)
-            option.text(value)
+            option.attr('value', value);
+            // select first value by default
+            if (counter === 0) {
+                option.attr('selected')
+                counter += 1
+            };
+            option.text(value);
     });
+        // This returned a string
+        // console.log(typeof(d3.select('#selDataset').property("value")))
 
-    // Update HTML by adding metadata info
-    var list = d3.select('#sample-metadata').append('ul');
-    list.style('list-style-type', 'none');
-    list.attr('class', 'list-group');
-    metadata.forEach((meta) => {
-        // console.log(typeof(meta.id))
-        if (meta.id === 940) {
-            Object.entries(meta).forEach(([key, value]) => {
-                console.log(`${key} : ${value}`)
-                var data = list.append('li');
-                data.attr('class', 'list-group-item');
-                data.style('font-size', '9px');
-                data.style('font-weight', 'bold');
-                data.style('text-transform', 'capitalize');
-                // if (key.lowered() === 'ethnicity') {
-                //     splitValue = value.split("/");
-                //     data.text(`${key} : ${splitValue[0]}`);
-                // }
-                data.text(`${key} : ${value}`);
-            });
-        }   
-    });
+        // Grab default ID and change to Integer (it returned as a string) by using "+"
+        defaultID = +d3.select('#selDataset').property("value")
+        // console.log(typeof(defaultID))
+
+        // Update HTML by adding metadata info
+        var list = d3.select('#sample-metadata').append('ul');
+        list.style('list-style-type', 'none');
+        list.attr('class', 'list-group');
+        metadata.forEach((meta) => {
+            // console.log(typeof(meta.id))
+            if (meta.id === defaultID) {
+                Object.entries(meta).forEach(([key, value]) => {
+                    console.log(`${key} : ${value}`)
+                    var data = list.append('li');
+                    data.attr('class', 'list-group-item');
+                    data.style('font-size', '9px');
+                    data.style('font-weight', 'bold');
+                    data.style('text-transform', 'capitalize');
+                    // if (key.lowered() === 'ethnicity') {
+                    //     splitValue = value.split("/");
+                    //     data.text(`${key} : ${splitValue[0]}`);
+                    // }
+                    data.text(`${key} : ${value}`);
+                });
+            }   
+        });
 
     }
 
@@ -106,6 +120,9 @@ d3.json("../data/samples.json").then((data) => {
         console.log(input)
         var samples = data.samples;
         var metadata = data.metadata;
+
+        d3.select('#sample-metadata').html('');
+        d3.select('#bar').html('');
 
         // var userSelection = input.property("value")
         var idData = samples.filter(findId);
@@ -121,12 +138,12 @@ d3.json("../data/samples.json").then((data) => {
         // console.log(findId);
 
         // console.log(samples)
-    //     console.log(d3.select('#selDataset').property("value"))
+        // console.log(d3.select('#selDataset').property("value"))
 
-    //     var sortedData = idData.sort(function (a, b){
-    //         return b.sample_values - a.sample_values;
-    //     });
-    //     // console.log(sortedData)
+        var sortedData = idData.sort(function (a, b){
+            return b.sample_values - a.sample_values;
+        });
+        console.log(sortedData)
 
     // //     // Get all Sample IDs from dataset
     // //     datasetId = samples.map(object => object.id);
@@ -138,40 +155,46 @@ d3.json("../data/samples.json").then((data) => {
     // //         option.text(value)
 
     // // })
-    //         // Slice values
-    //     start = 0;
-    //     end = 10;
+            // Slice values
+        start = 0;
+        end = 10;
         
-    //     // console.log(sortedData[0].otu_ids.slice(0, 10))
+        // console.log(sortedData[0].otu_ids.slice(0, 10))
 
-    //     //Slice data for index 0 and grab top 10 values
-    //     var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
-    //     var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
-    //     // console.log(slicedOtu)
+        //Slice data for index 0 and grab top 10 values
+        var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
+        var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
+        console.log(slicedOtu)
 
-    //     var trace1 = {
-    //         x: slicedSamples,
-    //         y: slicedOtu.map(function (d) {
-    //             return `OTU ${d} `
-    //         }),
-    //         // y: slicedOtu.map(d => `OTU ${d} `),
-    //         // text: (function (d) {
-    //         //     return `OTU ${d}`;
-    //         // }),
-    //         type: "bar",
-    //         orientation: 'h'
-    //         // width: 50
-    //     };
+        var trace1 = {
+            x: slicedSamples,
+            y: slicedOtu.map(function (d) {
+                return `OTU ${d} `
+            }),
+            // y: slicedOtu.map(d => `OTU ${d} `),
+            // text: (function (d) {
+            //     return `OTU ${d}`;
+            // }),
+            type: "bar",
+            orientation: "h",
+            // width: 50
+        };
+        // console.log(trace1)
 
-    //     // data
-    //     data = [trace1];
+        // // data
+        data = [trace1];
+        console.log(data)
 
-    //     var layout = {
-    //         title: 'Top 10 OTUs for selected Subject ID'
-    //     };
+        var layout = {
+            title: 'Top 10 OTUs for selected Subject ID'
+        };
 
-    //     // Render the plot to the div tag with id "plot"
-    //     Plotly.newPlot("bar", data, layout); 
+        // svg.selectAll("*").remove();
+        // d3.select("svg").remove();
+
+        // Render the plot to the div tag with id "plot"
+        // Plotly.newPlot("bar", data, layout); 
+        Plotly.restyle("bar", data, layout)
 
     }
     
