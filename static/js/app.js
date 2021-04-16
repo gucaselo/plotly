@@ -1,6 +1,8 @@
 d3.json("../data/samples.json").then((data) => {
     // console.log(data.names[0]);
     var samples = data.samples;
+    var metadata = data.metadata;
+    // data.metadata.forEach((d) =>console.log(d.id === '940'))
 
     // var ids = samples.map(function(name) {
     //     // for (i=0; i<names.lenght; i++)
@@ -26,14 +28,14 @@ d3.json("../data/samples.json").then((data) => {
 
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
-        console.log(id)
+        // console.log(id)
         return value.id === id
     };
 
      // User ID input
     var userSelection = d3.select('#selDataset');
     // .attr('value')
-    d3.select(window).on('load', initialLoad(samples));
+    d3.select(window).on('load', initialLoad(data));
     userSelection.on('change', optionChanged(samples, userSelection));
 
     // userSelection.on('change', function() {
@@ -41,20 +43,69 @@ d3.json("../data/samples.json").then((data) => {
     //     optionChanged(samples, selection);
     // });
 
-    function initialLoad (samples) {
+    function initialLoad (data) {
         
         // // Prevent default behavior 
         // d3.event.preventDefault();
 
+        var samples = data.samples;
+        var metadata = data.metadata;
+        // console.log(metadata)
+
         // Get all Sample IDs from dataset
         datasetId = samples.map(object => object.id);
+
+        // Get all metadata info
+        // metadataInfo = metadata.map(object => object.metadata)
+        
+        metadataInfo = metadata.map((value) => {
+            // if (value.id === '940') {
+            //     return value
+            // }
+            return value.id
+            
+        })
+        // 100% working 
+        metadata.forEach((meta) => {
+            // console.log(typeof(meta.id))
+            if (meta.id === 941) {
+                Object.entries(meta).forEach(([key, value]) => console.log(`${key} : ${value}`));
+            }   
+        });
+         
+        
+        // metadataInfo = metadata.map(object => {
+        //     for (i=0; i<metadata.length; i++) {
+        //         console.log(object.id)
+        //         // if (object[i].id === '940') {
+        //         //     return object[i]
+        //         // }
+        //     }
+        // });
+        // console.log(metadataInfo)
 
         // Update HTML by adding option tag with id values
         Object.values(datasetId).forEach((value) => {
             var option = d3.select('select').append('option');
             option.attr('value', value)
             option.text(value)
-    })
+    });
+
+        // Update HTML by adding metadata info
+    //     var list = d3.select('#sample-metadata').append('ul');
+    //     list.style('list-style-type', 'none');
+    //     Object.entries(metadataInfo).forEach(([key, value]) => {
+    //         var data = list.append('li');
+    //         data.text(`${key} : ${value}`)
+    // });
+
+    //       // Update HTML by adding metadata info
+    //     var list = d3.select('#sample-metadata').append('ul');
+    //     list.style('list-style-type', 'none');
+    //     Object.entries(metadataInfo).forEach(([key, value]) => {
+    //         var data = list.append('li');
+    //         data.text(`${value.} : ${value}`)
+    // // });
 
     }
 
@@ -92,12 +143,12 @@ d3.json("../data/samples.json").then((data) => {
         //Slice data for index 0 and grab top 10 values
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
-        console.log(slicedOtu)
+        // console.log(slicedOtu)
 
         var trace1 = {
             x: slicedSamples,
             y: slicedOtu.map(function (d) {
-                return `OTU ${d}`
+                return `OTU ${d} `
             }),
             // y: slicedOtu.map(d => `OTU ${d} `),
             // text: (function (d) {
@@ -112,7 +163,7 @@ d3.json("../data/samples.json").then((data) => {
         data = [trace1];
 
         var layout = {
-            title: 'Top 10 OTUs pero individual ID'
+            title: 'Top 10 OTUs for selected Subject ID'
         };
 
         // Render the plot to the div tag with id "plot"
