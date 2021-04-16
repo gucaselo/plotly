@@ -2,30 +2,6 @@ d3.json("../data/samples.json").then((data) => {
     // console.log(data.names[0]);
     var samples = data.samples;
     var metadata = data.metadata;
-    
-    // data.metadata.forEach((d) =>console.log(d.id === '940'))
-
-    // var ids = samples.map(function(name) {
-    //     // for (i=0; i<names.lenght; i++)
-    //     return name.id
-    // });
-    // // console.log(ids[0]);
-
-    // var sampleValues = samples.map(function(values) {
-    //     return values.sample_values
-    // });
-    // // console.log(sampleValues[0])
-        
-    // var otuIds = samples.map(function(otu) {
-    //     return otu.otu_ids
-    // });
-    // // console.log(otuIds[0])
-
-    // var otuLabels = samples.map(function(labels) {
-    //     return labels.otu_labels
-    // });
-    // // console.log(otuLabels[0])
-
 
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
@@ -36,14 +12,6 @@ d3.json("../data/samples.json").then((data) => {
      // User ID input
     var userSelection = d3.select('#selDataset');
 
-    //////////////////////////////
-//    Test 100% functional
-    // d3.select("#selDataset").on("change", function() {
-    //     value = d3.select(this).property("value")
-    //     console.log(value);
-    // });
-    /////////////////////////
-
     d3.select(window).on('load', initialLoad(data));
     userSelection.on('change', optionChanged);
 
@@ -53,8 +21,7 @@ d3.json("../data/samples.json").then((data) => {
     //--------------------------------------------------------//
     function initialLoad(data) {
         counter = 0
-        // var input = d3.select(this).property("value")
-        // var idData = samples.filter(findId);
+
         // // Prevent default behavior 
         // d3.event.preventDefault();
 
@@ -78,8 +45,6 @@ d3.json("../data/samples.json").then((data) => {
     });
         // This returned a string
         // console.log(typeof(d3.select('#selDataset').property("value")))
-
-
 
          //--------------------Demographic Info ---------------------------//
 
@@ -276,7 +241,6 @@ d3.json("../data/samples.json").then((data) => {
             // }),
             type: "bar",
             orientation: "h",
-            // width: 50
         };
         // console.log(trace1)
 
@@ -316,18 +280,14 @@ d3.json("../data/samples.json").then((data) => {
             }
           };
 
-        // svg.selectAll("*").remove();
-        // d3.select("svg").remove();
-
         // Render the plot to the div tag with id "plot"
         Plotly.newPlot("bar", barData, barLayout); 
-        // Plotly.restyle("bar", data, layout)
 
         //---------------------Bubble Chart ---------------------------//
         var sortedSamples = sortedData[0].sample_values;
         var sortedOtu = sortedData[0].otu_ids;
         var sortedOtuLabels = sortedData[0].otu_labels;
-        // var  = Math.floor(Math.random()*16777215).toString(16);
+    
         function randomColors(n) {
             var randomColorsArray = [];
             for (var i = 0; i < n.length; i++) {
