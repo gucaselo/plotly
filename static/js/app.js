@@ -141,6 +141,8 @@ d3.json("../data/samples.json").then((data) => {
         Plotly.newPlot("bar", data, layout); 
 
         //---------------------Bubble Chart ---------------------------//
+        var sortedSamples = sortedData[0].sample_values;
+        var sortedOtu = sortedData[0].otu_ids;
         // var  = Math.floor(Math.random()*16777215).toString(16);
         function randomColors(n) {
             var randomColorsArray = [];
@@ -151,15 +153,15 @@ d3.json("../data/samples.json").then((data) => {
             return randomColorsArray;
           };
 
-        var randomColor = randomColors(slicedOtu);
+        var randomColor = randomColors(sortedOtu);
         // console.log(randomColor);
         var bubbleTrace1 = {
-            x: slicedOtu,
-            y: slicedSamples,
+            x: sortedOtu,
+            y: sortedSamples,
             mode: 'markers',
             marker: {
                 color: randomColor,
-                size: slicedSamples,
+                size: sortedSamples,
             },
         };
 
@@ -234,6 +236,8 @@ d3.json("../data/samples.json").then((data) => {
         // Plotly.restyle("bar", data, layout)
 
         //---------------------Bubble Chart ---------------------------//
+        var sortedSamples = sortedData[0].sample_values;
+        var sortedOtu = sortedData[0].otu_ids;
         // var  = Math.floor(Math.random()*16777215).toString(16);
         function randomColors(n) {
             var randomColorsArray = [];
@@ -244,15 +248,15 @@ d3.json("../data/samples.json").then((data) => {
             return randomColorsArray;
           };
 
-        var randomColor = randomColors(slicedOtu);
+        var randomColor = randomColors(sortedOtu);
         console.log(randomColor);
         var bubbleTrace1 = {
-            x: slicedOtu,
-            y: slicedSamples,
+            x: sortedOtu,
+            y: sortedSamples,
             mode: 'markers',
             marker: {
                 color: randomColor,
-                size: slicedSamples,
+                size: sortedSamples,
             },
         };
         // console.log(trace1)
