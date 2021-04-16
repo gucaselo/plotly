@@ -134,10 +134,6 @@ d3.json("../data/samples.json").then((data) => {
 
         barData = [trace1];
 
-        // var barLayout = {
-        //     title: 'Top 10 OTUs for selected Subject ID'
-        // };
-
         var barLayout = {
             title: {
               text:'Top 10 OTUs for selected Subject ID',
@@ -147,6 +143,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             xaxis: {
+              ticks: 'inside',
               title: {
                 text: 'Sample values',
                 font: {
@@ -156,7 +153,8 @@ d3.json("../data/samples.json").then((data) => {
                 }
               },
             },
-            // yaxis: {
+            yaxis: {
+                ticks: 'inside',
             //   title: {
             //     text: 'OTU ID',
             //     font: {
@@ -165,7 +163,7 @@ d3.json("../data/samples.json").then((data) => {
             //       color: '#7f7f7f'
             //     }
             //   }
-            // }
+            }
           };
 
         Plotly.newPlot("bar", barData, barLayout); 
@@ -203,10 +201,6 @@ d3.json("../data/samples.json").then((data) => {
         bubbleData = [bubbleTrace1];
         // console.log(data)
 
-        // var layout = {
-        //     title: 'Bubble Chart'
-        // };
-
         var bubbleLayout = {
             title: {
               text:'Bubble Chart of selected Subject ID',
@@ -216,6 +210,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             xaxis: {
+              ticks: 'inside',
               title: {
                 text: 'OTU ID',
                 font: {
@@ -226,6 +221,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             yaxis: {
+              ticks: 'inside',
               title: {
                 text: 'Sample Values',
                 font: {
@@ -288,10 +284,6 @@ d3.json("../data/samples.json").then((data) => {
         barData = [barTrace];
         console.log(barTrace)
 
-        // var layout = {
-        //     title: 'Top 10 OTUs for selected Subject ID'
-        // };
-
         var barLayout = {
             title: {
               text:'Top 10 OTUs for selected Subject ID',
@@ -301,6 +293,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             xaxis: {
+              ticks: 'inside',
               title: {
                 text: 'Sample values',
                 font: {
@@ -310,7 +303,8 @@ d3.json("../data/samples.json").then((data) => {
                 }
               },
             },
-            // yaxis: {
+            yaxis: {
+                 ticks: 'inside',
             //   title: {
             //     text: 'OTU ID',
             //     font: {
@@ -319,7 +313,7 @@ d3.json("../data/samples.json").then((data) => {
             //       color: '#7f7f7f'
             //     }
             //   }
-            // }
+            }
           };
 
         // svg.selectAll("*").remove();
@@ -363,10 +357,6 @@ d3.json("../data/samples.json").then((data) => {
         bubbleData = [bubbleTrace];
         // console.log(data)
 
-        // var layout = {
-        //     title: 'Bubble Chart'
-        // };
-
         var bubbleLayout = {
             title: {
               text:'Bubble Chart of selected Subject ID',
@@ -376,6 +366,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             xaxis: {
+              ticks: 'inside',
               title: {
                 text: 'OTU ID',
                 font: {
@@ -386,6 +377,7 @@ d3.json("../data/samples.json").then((data) => {
               },
             },
             yaxis: {
+              ticks: 'inside',
               title: {
                 text: 'Sample Values',
                 font: {
