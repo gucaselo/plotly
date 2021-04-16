@@ -200,30 +200,24 @@ d3.json("../data/samples.json").then((data) => {
         // Plotly.restyle("bar", data, layout)
 
         //---------------------Bubble Chart ---------------------------//
-        var randomColor = Math.floor(Math.random()*16777215).toString(16);
-        // slicedOtu.forEach((value) => {
-        //     randomColor = Math.floor(Math.random()*16777215).toString(16)
-        //     console.log(`#${randomColor}`)
-        // });
-        // function randomColor(data) {
-        //     var colors = [];
-        //     for (i=0; i < data.length; i++) {
-        //         randomColor = Math.floor(Math.random()*16777215).toString(16)
-        //         colors.push(`#${randomColor}`);
-        //         console.log(colors)
-        //         return colors
-        // }
-        // };
+        // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+        function randomColors(n) {
+            var randomColorsArray = [];
+            for (var i = 0; i < n.length; i++) {
+              var randomNumber = Math.floor(Math.random()*16777215).toString(16);
+              randomColorsArray.push(`#${randomNumber}`);
+            }
+            return randomColorsArray;
+          };
 
+        var colors = randomColors(slicedOtu);
+        console.log(colors);
         var bubbleTrace1 = {
             x: slicedOtu,
             y: slicedSamples,
             mode: 'markers',
             marker: {
-                color: slicedOtu.map(a => `#${randomColor}`), 
-                // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)',
-                //         'rgb(255, 65, 54)', 'rgb(93, 164, 214)', 'rgb(255, 144, 14)',
-                //         'rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)'],
+                color: colors,
                 size: slicedSamples,
             },
         };
