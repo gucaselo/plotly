@@ -139,6 +139,40 @@ d3.json("../data/samples.json").then((data) => {
         };
 
         Plotly.newPlot("bar", data, layout); 
+
+        //---------------------Bubble Chart ---------------------------//
+        // var  = Math.floor(Math.random()*16777215).toString(16);
+        function randomColors(n) {
+            var randomColorsArray = [];
+            for (var i = 0; i < n.length; i++) {
+              var randomNumber = Math.floor(Math.random()*16777215).toString(16);
+              randomColorsArray.push(`#${randomNumber}`);
+            }
+            return randomColorsArray;
+          };
+
+        var randomColor = randomColors(slicedOtu);
+        // console.log(randomColor);
+        var bubbleTrace1 = {
+            x: slicedOtu,
+            y: slicedSamples,
+            mode: 'markers',
+            marker: {
+                color: randomColor,
+                size: slicedSamples,
+            },
+        };
+
+        // data
+        data = [bubbleTrace1];
+        // console.log(data)
+
+        var layout = {
+            title: 'Bubble Chart'
+        };
+
+        // Plot the Bubble Chart to the div tag with id "plot"
+        Plotly.newPlot("bubble", data, layout); 
     }
 
     //--------------------------------------------------------//
@@ -200,7 +234,7 @@ d3.json("../data/samples.json").then((data) => {
         // Plotly.restyle("bar", data, layout)
 
         //---------------------Bubble Chart ---------------------------//
-        // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+        // var  = Math.floor(Math.random()*16777215).toString(16);
         function randomColors(n) {
             var randomColorsArray = [];
             for (var i = 0; i < n.length; i++) {
@@ -210,14 +244,14 @@ d3.json("../data/samples.json").then((data) => {
             return randomColorsArray;
           };
 
-        var colors = randomColors(slicedOtu);
-        console.log(colors);
+        var randomColor = randomColors(slicedOtu);
+        console.log(randomColor);
         var bubbleTrace1 = {
             x: slicedOtu,
             y: slicedSamples,
             mode: 'markers',
             marker: {
-                color: colors,
+                color: randomColor,
                 size: slicedSamples,
             },
         };
@@ -235,7 +269,7 @@ d3.json("../data/samples.json").then((data) => {
         Plotly.newPlot("bubble", data, layout); 
 
 
-        //--------------------- Demographhic Info ---------------------------//
+        //--------------------- Demographic Info ---------------------------//
         // Update HTML by adding metadata info
         var list = d3.select('#sample-metadata').append('ul');
         list.style('list-style-type', 'none');
