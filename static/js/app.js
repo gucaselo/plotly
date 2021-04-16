@@ -30,7 +30,7 @@ d3.json("../data/samples.json").then((data) => {
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
         console.log(`filter id: ${typeof(id)}`)
-        return value.id === id
+        return +value.id === +id
     };
 
      // User ID input
@@ -144,11 +144,12 @@ d3.json("../data/samples.json").then((data) => {
     //--------------------------------------------------------//
     //                Function Subject ID Change              //
     //--------------------------------------------------------//
-    function optionChanged(samples) {
+    function optionChanged() {
         var input = +d3.select(this).property("value")
         console.log(typeof(input))
-        var samples = data.samples;
-        var metadata = data.metadata;
+        // var samples = data.samples;
+        // var metadata = data.metadata;
+        console.log(`samples: ${samples}`)
 
         d3.select('#sample-metadata').html('');
         // d3.select("svg").remove();
