@@ -132,13 +132,43 @@ d3.json("../data/samples.json").then((data) => {
             orientation: "h",
         };
 
-        data = [trace1];
+        barData = [trace1];
 
-        var layout = {
-            title: 'Top 10 OTUs for selected Subject ID'
-        };
+        // var barLayout = {
+        //     title: 'Top 10 OTUs for selected Subject ID'
+        // };
 
-        Plotly.newPlot("bar", data, layout); 
+        var barLayout = {
+            title: {
+              text:'Top 10 OTUs for selected Subject ID',
+              font: {
+                family: 'Courier New, monospace',
+                size: 21
+              },
+            },
+            xaxis: {
+              title: {
+                text: 'Sample values',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              },
+            },
+            // yaxis: {
+            //   title: {
+            //     text: 'OTU ID',
+            //     font: {
+            //       family: 'Courier New, monospace',
+            //       size: 18,
+            //       color: '#7f7f7f'
+            //     }
+            //   }
+            // }
+          };
+
+        Plotly.newPlot("bar", barData, barLayout); 
 
         //---------------------Bubble Chart ---------------------------//
         var sortedSamples = sortedData[0].sample_values;
@@ -164,19 +194,51 @@ d3.json("../data/samples.json").then((data) => {
             marker: {
                 color: randomColor,
                 size: sortedSamples,
+                // sizemode: 'area',
+                // sizeref: 1,
             },
         };
 
         // data
-        data = [bubbleTrace1];
+        bubbleData = [bubbleTrace1];
         // console.log(data)
 
-        var layout = {
-            title: 'Bubble Chart'
-        };
+        // var layout = {
+        //     title: 'Bubble Chart'
+        // };
+
+        var bubbleLayout = {
+            title: {
+              text:'Bubble Chart of selected Subject ID',
+              font: {
+                family: 'Courier New, monospace',
+                size: 24
+              },
+            },
+            xaxis: {
+              title: {
+                text: 'OTU ID',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              },
+            },
+            yaxis: {
+              title: {
+                text: 'Sample Values',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              }
+            }
+          };
 
         // Plot the Bubble Chart to the div tag with id "plot"
-        Plotly.newPlot("bubble", data, layout); 
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
     }
 
     //--------------------------------------------------------//
@@ -207,7 +269,7 @@ d3.json("../data/samples.json").then((data) => {
         console.log(slicedOtu)
 
         //---------------------Bar Plot ---------------------------//
-        var trace1 = {
+        var barTrace = {
             x: slicedSamples,
             y: slicedOtu.map(function (d) {
                 return `OTU ${d} `
@@ -223,18 +285,48 @@ d3.json("../data/samples.json").then((data) => {
         // console.log(trace1)
 
         // data
-        data = [trace1];
-        console.log(data)
+        barData = [barTrace];
+        console.log(barTrace)
 
-        var layout = {
-            title: 'Top 10 OTUs for selected Subject ID'
-        };
+        // var layout = {
+        //     title: 'Top 10 OTUs for selected Subject ID'
+        // };
+
+        var barLayout = {
+            title: {
+              text:'Top 10 OTUs for selected Subject ID',
+              font: {
+                family: 'Courier New, monospace',
+                size: 21
+              },
+            },
+            xaxis: {
+              title: {
+                text: 'Sample values',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              },
+            },
+            // yaxis: {
+            //   title: {
+            //     text: 'OTU ID',
+            //     font: {
+            //       family: 'Courier New, monospace',
+            //       size: 18,
+            //       color: '#7f7f7f'
+            //     }
+            //   }
+            // }
+          };
 
         // svg.selectAll("*").remove();
         // d3.select("svg").remove();
 
         // Render the plot to the div tag with id "plot"
-        Plotly.newPlot("bar", data, layout); 
+        Plotly.newPlot("bar", barData, barLayout); 
         // Plotly.restyle("bar", data, layout)
 
         //---------------------Bubble Chart ---------------------------//
@@ -253,7 +345,7 @@ d3.json("../data/samples.json").then((data) => {
 
         var randomColor = randomColors(sortedOtu);
         console.log(randomColor);
-        var bubbleTrace1 = {
+        var bubbleTrace = {
             x: sortedOtu,
             y: sortedSamples,
             text: sortedOtuLabels,
@@ -261,20 +353,52 @@ d3.json("../data/samples.json").then((data) => {
             marker: {
                 color: randomColor,
                 size: sortedSamples,
+                // sizemode: 'area',
+                // sizeref: 1,
             },
         };
         // console.log(trace1)
 
         // data
-        data = [bubbleTrace1];
+        bubbleData = [bubbleTrace];
         // console.log(data)
 
-        var layout = {
-            title: 'Bubble Chart'
-        };
+        // var layout = {
+        //     title: 'Bubble Chart'
+        // };
+
+        var bubbleLayout = {
+            title: {
+              text:'Bubble Chart of selected Subject ID',
+              font: {
+                family: 'Courier New, monospace',
+                size: 24
+              },
+            },
+            xaxis: {
+              title: {
+                text: 'OTU ID',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              },
+            },
+            yaxis: {
+              title: {
+                text: 'Sample Values',
+                font: {
+                  family: 'Courier New, monospace',
+                  size: 18,
+                  color: '#7f7f7f'
+                }
+              }
+            }
+          };
 
         // Render the plot to the div tag with id "plot"
-        Plotly.newPlot("bubble", data, layout); 
+        Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
 
 
         //--------------------- Demographic Info ---------------------------//
