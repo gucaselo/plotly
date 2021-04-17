@@ -230,15 +230,15 @@ d3.json("../data/samples.json").then((data) => {
                                     },
                                 type: "indicator",
                                 mode: "gauge+number",
-                                marker: {
-                                    size: 12,
-                                    symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
-                                },
+                                // marker: {
+                                //     size: 12,
+                                //     symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
+                                // },
                                 gauge: {
                                     axis: {range: [null, 9],
                                              tickmode: "array", 
                                              tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                                             ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
+                                            //  ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
                                             },
                                     bar: { color: "#4da6ff" },    
                                     steps: [
@@ -442,15 +442,16 @@ d3.json("../data/samples.json").then((data) => {
                                     },
                                 type: "indicator",
                                 mode: "gauge+number",
-                                marker: {
-                                    size: 12,
-                                    symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
-                                },
+                                // marker: {
+                                //     size: 12,
+                                //     labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
+                                    // symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
+                                // },
                                 gauge: {
                                     axis: {range: [null, 9],
                                              tickmode: "array", 
                                              tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                                             ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
+                                            //  ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
                                             },
                                     bar: { color: "#4da6ff" },
                                         
