@@ -171,7 +171,7 @@ d3.json("samples.json").then((data) => {
         // Plot layout
         var bubbleLayout = {
             title: {
-              text:'Bubble Chart of selected Subject ID',
+              text:'Operational Taxonomic Units(OTU) Bubble Chart',
               font: {
                 family: 'Courier New, monospace',
                 size: 24
@@ -379,7 +379,7 @@ d3.json("samples.json").then((data) => {
         // Layout
         var bubbleLayout = {
             title: {
-              text:'Bubble Chart of selected Subject ID',
+              text:'Operational Taxonomic Units(OTU) Bubble Chart',
               font: {
                 family: 'Courier New, monospace',
                 size: 24
