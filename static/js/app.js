@@ -85,6 +85,7 @@ d3.json("../data/samples.json").then((data) => {
         
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
+        var slicedOtuLabels = sortedData[0].otu_labels.slice(start, end).reverse();
 
         var randomColorBar = randomColors(slicedOtu);
         
@@ -93,6 +94,7 @@ d3.json("../data/samples.json").then((data) => {
             y: slicedOtu.map(function (d) {
                 return `OTU ${d} `
             }),
+            text: slicedOtuLabels,
             type: "bar",
             orientation: "h",
             marker: {
@@ -296,6 +298,7 @@ d3.json("../data/samples.json").then((data) => {
         //Slice data for index 0 and grab top 10 values
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
+        var slicedOtuLabels = sortedData[0].otu_labels.slice(start, end).reverse();
 
         //---------------------Bar Plot ---------------------------//
         var randomColorBar = randomColors(slicedOtu);
@@ -305,7 +308,7 @@ d3.json("../data/samples.json").then((data) => {
                 return `OTU ${d} `
             }),
             // y: slicedOtu.map(d => `OTU ${d} `),
-            // text: xxx,
+            text: slicedOtuLabels,
             type: "bar",
             orientation: "h",
             marker: {
