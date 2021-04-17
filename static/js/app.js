@@ -225,7 +225,13 @@ d3.json("../data/samples.json").then((data) => {
                             {
                                 domain: { x: [0, 1], y: [0, 1] },
                                 value: wfreq,
-                                title: { text: "Scrubs per Week" },
+                                title: {
+                                    text:'Scrubs per Week',
+                                    font: {
+                                        family: 'Courier New, monospace',
+                                        size: 22,
+                                        },
+                                    },
                                 type: "indicator",
                                 mode: "gauge+number",
                                 marker: {
@@ -253,9 +259,20 @@ d3.json("../data/samples.json").then((data) => {
                                     ],
                                 }
                             }];
+                        var gaugelayout = {
+                            title: {
+                            text:'Belly Button Washing Frequency',
+                            font: {
+                                family: 'Courier New, monospace',
+                                size: 22,
+                                },
+                            },
+                            width: 600, 
+                            height: 500,
+                        };
 
-                        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
-                        Plotly.newPlot('gauge', gaugeData, layout);
+                        // var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        Plotly.newPlot('gauge', gaugeData, gaugelayout);
 
                     };
                 });
@@ -434,7 +451,13 @@ d3.json("../data/samples.json").then((data) => {
                             {
                                 domain: { x: [0, 1], y: [0, 1] },
                                 value: wfreq,
-                                title: { text: "Scrubs per Week" },
+                                title: {
+                                    text:'Scrubs per Week',
+                                    font: {
+                                        family: 'Courier New, monospace',
+                                        size: 22,
+                                        },
+                                    },
                                 type: "indicator",
                                 mode: "gauge+number",
                                 marker: {
@@ -464,8 +487,20 @@ d3.json("../data/samples.json").then((data) => {
                                 }
                             }];
 
-                        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
-                        Plotly.newPlot('gauge', gaugeData, layout);
+                            var gaugelayout = {
+                                title: {
+                                text:'Belly Button Washing Frequency',
+                                font: {
+                                  family: 'Courier New, monospace',
+                                  size: 22,
+                                    },
+                                },
+                                width: 600, 
+                                height: 500,
+                            };
+
+                        // var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        Plotly.newPlot('gauge', gaugeData, gaugelayout);
 
                     };
                 });
