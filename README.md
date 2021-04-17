@@ -18,6 +18,8 @@ Using `Javascript`, `Plotly` and `D3js` library to read a `.json` file to genera
 
 All sections and charts mentioned above update everytime a new subject ID is selected.
 
+To access this interactive dashboard [click here](https://gucaselo.github.io/plotly/).
+
 ### Reference
 * Refer to the [Plotly.js documentation](https://plot.ly/javascript/) to learn more about this library.
 * [Hulcr, J. et al.(2012) A Jungle in There: Bacteria in Belly Buttons are Highly Diverse, but Predictable.](http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/)
