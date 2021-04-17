@@ -43,12 +43,10 @@ d3.json("../data/samples.json").then((data) => {
             };
             option.text(value);
     });
-        // This returned a string
-        // console.log(typeof(d3.select('#selDataset').property("value")))
 
          //--------------------Demographic Info ---------------------------//
 
-        // Grab default ID and change to Integer (it returned as a string) by using "+"
+        // Grab default ID and change to Integer (it was a string) by using "+"
         defaultID = +d3.select('#selDataset').property("value")
         // console.log(typeof(defaultID))
 
@@ -61,11 +59,6 @@ d3.json("../data/samples.json").then((data) => {
             if (meta.id === defaultID) {
                 Object.entries(meta).forEach(([key, value]) => {
                     // console.log(`${key} : ${value}`)
-                    // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
-                    if (key === 'wfreq') {
-                        var wfreq = value;
-                        console.log(`Washing frequency: ${wfreq}`)
-                    };
                     var data = list.append('li');
                     data.attr('class', 'list-group-item');
                     data.style('font-size', '9px');
@@ -140,14 +133,16 @@ d3.json("../data/samples.json").then((data) => {
             //   }
             // }
           };
-
+        
+          // Generate the Bar Plot to the div tag with id "bar"
         Plotly.newPlot("bar", barData, barLayout); 
 
         //---------------------Bubble Chart ---------------------------//
         var sortedSamples = sortedData[0].sample_values;
         var sortedOtu = sortedData[0].otu_ids;
         var sortedOtuLabels = sortedData[0].otu_labels;
-        // var  = Math.floor(Math.random()*16777215).toString(16);
+        
+        // Function to generate random color codes
         function randomColors(n) {
             var randomColorsArray = [];
             for (var i = 0; i < n.length; i++) {
@@ -158,7 +153,6 @@ d3.json("../data/samples.json").then((data) => {
           };
 
         var randomColor = randomColors(sortedOtu);
-        // console.log(randomColor);
         var bubbleTrace1 = {
             x: sortedOtu,
             y: sortedSamples,
@@ -172,10 +166,10 @@ d3.json("../data/samples.json").then((data) => {
             },
         };
 
-        // data
+        // Data
         bubbleData = [bubbleTrace1];
-        // console.log(data)
 
+        // Plot layout
         var bubbleLayout = {
             title: {
               text:'Bubble Chart of selected Subject ID',
@@ -208,7 +202,7 @@ d3.json("../data/samples.json").then((data) => {
             }
           };
 
-        // Plot the Bubble Chart to the div tag with id "plot"
+        // Plot the Bubble Chart to the div tag with id "bubble"
         Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
 
 
@@ -216,10 +210,10 @@ d3.json("../data/samples.json").then((data) => {
         metadata.forEach((meta) => {
             if (meta.id === defaultID) {
                 Object.entries(meta).forEach(([key, value]) => {
-                    // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
+
+                    // This conditional statement is to store washing frequency to be used in the gauge chart
                     if (key === 'wfreq') {
                         var wfreq = value;
-                        console.log(`Washing frequency: ${wfreq}`)
 
                         var gaugeData = [
                             {
@@ -270,38 +264,30 @@ d3.json("../data/samples.json").then((data) => {
                             width: 600, 
                             height: 500,
                         };
-
-                        // var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        
+                        // Plot the Gauge Chart to the div tag with id "gauge"
                         Plotly.newPlot('gauge', gaugeData, gaugelayout);
 
                     };
                 });
             }   
         });
-
-        
-        
-        
-        
-    }
+    };
 
     //--------------------------------------------------------//
     //                Function Subject ID Change              //
     //--------------------------------------------------------//
     function optionChanged() {
         var input = +d3.select(this).property("value")
-        // console.log(typeof(input))
 
         d3.select('#sample-metadata').html('');
         d3.select('#bar').html('');
 
         var idData = samples.filter(findId);
-        // console.log(idData);
 
         var sortedData = idData.sort(function (a, b){
             return b.sample_values - a.sample_values;
         });
-        // console.log(sortedData)
 
         // Slice values
         start = 0;
@@ -310,7 +296,6 @@ d3.json("../data/samples.json").then((data) => {
         //Slice data for index 0 and grab top 10 values
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
-        // console.log(slicedOtu)
 
         //---------------------Bar Plot ---------------------------//
         var randomColorBar = randomColors(slicedOtu);
@@ -320,20 +305,17 @@ d3.json("../data/samples.json").then((data) => {
                 return `OTU ${d} `
             }),
             // y: slicedOtu.map(d => `OTU ${d} `),
-            // text: (function (d) {
-            //     return `OTU ${d}`;
-            // }),
+            // text: xxx,
             type: "bar",
             orientation: "h",
             marker: {
                 color: randomColorBar},
         };
-        // console.log(trace1)
 
-        // data
+        // Data
         barData = [barTrace];
-        // console.log(barTrace)
 
+        // Layout
         var barLayout = {
             title: {
               text:'Top 10 OTUs for selected Subject ID',
@@ -366,7 +348,7 @@ d3.json("../data/samples.json").then((data) => {
             // }
           };
 
-        // Render the plot to the div tag with id "plot"
+        // Generate the Bar Plot to the div tag with id "bar"
         Plotly.newPlot("bar", barData, barLayout); 
 
         //---------------------Bubble Chart ---------------------------//
@@ -384,7 +366,7 @@ d3.json("../data/samples.json").then((data) => {
           };
 
         var randomColor = randomColors(sortedOtu);
-        // console.log(randomColor);
+
         var bubbleTrace = {
             x: sortedOtu,
             y: sortedSamples,
@@ -397,12 +379,11 @@ d3.json("../data/samples.json").then((data) => {
                 // sizeref: 1,
             },
         };
-        // console.log(trace1)
 
-        // data
+        // Data
         bubbleData = [bubbleTrace];
-        // console.log(data)
 
+        // Layout
         var bubbleLayout = {
             title: {
               text:'Bubble Chart of selected Subject ID',
@@ -435,7 +416,7 @@ d3.json("../data/samples.json").then((data) => {
             }
           };
 
-        // Render the plot to the div tag with id "plot"
+        // Plot the Bubble Chart to the div tag with id "bubble"
         Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
 
         //---------------------Gauge Chart ---------------------------//
@@ -445,8 +426,6 @@ d3.json("../data/samples.json").then((data) => {
                     // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
                     if (key === 'wfreq') {
                         var wfreq = value;
-                        console.log(`Washing frequency: ${wfreq}`)
-
                         var gaugeData = [
                             {
                                 domain: { x: [0, 1], y: [0, 1] },
@@ -473,7 +452,7 @@ d3.json("../data/samples.json").then((data) => {
                                     bar: { color: "#4da6ff" },
                                         
                                     steps: [
-                                      { range: [0, 1], color: "#EBEBEB", name:'0-1'},
+                                      { range: [0, 1], color: "#EBEBEB" },
                                       { range: [1, 2], color: "#E2ECDA" },
                                       { range: [2, 3], color: "#D8EFC5" },
                                       { range: [3, 4], color: "#C8F0A8" },
@@ -481,7 +460,7 @@ d3.json("../data/samples.json").then((data) => {
                                       { range: [5, 6], color: "#9EF15A" },
                                       { range: [6, 7], color: "#82F128" },
                                       { range: [7, 8], color: "#367602" },
-                                      { range: [8, 9], color: "#204503", name: '8-9' }
+                                      { range: [8, 9], color: "#204503" }
 
                                     ],
                                 }
@@ -498,16 +477,13 @@ d3.json("../data/samples.json").then((data) => {
                                 width: 600, 
                                 height: 500,
                             };
-
-                        // var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        // Plot the Gauge Chart to the div tag with id "gauge"
                         Plotly.newPlot('gauge', gaugeData, gaugelayout);
 
                     };
                 });
             }   
         });
-
-
 
         //--------------------- Demographic Info ---------------------------//
         // Update HTML by adding metadata info
