@@ -7,7 +7,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 ###  Design
 
-<img src="img/page_sample.PNG" width="50%"/>
+<img src="img/page_sample.PNG" width="50%" class="center"/>
 
 Using `Javascript`, `Plotly` and `D3js` library to read a `.json` file to generate the followings using a dropdown menu contaning the test subject ID:
 
