@@ -5,7 +5,7 @@ d3.json("../data/samples.json").then((data) => {
 
     function findId(value) {
         var id = d3.select('#selDataset').property("value")
-        console.log(`filter id: ${typeof(id)}`)
+        // console.log(`filter id: ${typeof(id)}`)
         return +value.id === +id
     };
 
@@ -60,7 +60,12 @@ d3.json("../data/samples.json").then((data) => {
             // console.log(typeof(meta.id))
             if (meta.id === defaultID) {
                 Object.entries(meta).forEach(([key, value]) => {
-                    console.log(`${key} : ${value}`)
+                    // console.log(`${key} : ${value}`)
+                    // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
+                    if (key === 'wfreq') {
+                        var wfreq = value;
+                        console.log(`Washing frequency: ${wfreq}`)
+                    };
                     var data = list.append('li');
                     data.attr('class', 'list-group-item');
                     data.style('font-size', '9px');
@@ -87,6 +92,8 @@ d3.json("../data/samples.json").then((data) => {
         
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
+
+        var randomColorBar = randomColors(slicedOtu);
         
         var trace1 = {
             x: slicedSamples,
@@ -95,6 +102,9 @@ d3.json("../data/samples.json").then((data) => {
             }),
             type: "bar",
             orientation: "h",
+            marker: {
+                color: randomColorBar,
+            },
         };
 
         barData = [trace1];
@@ -118,8 +128,8 @@ d3.json("../data/samples.json").then((data) => {
                 }
               },
             },
-            yaxis: {
-                ticks: 'inside',
+            // yaxis: {
+                // ticks: 'inside',
             //   title: {
             //     text: 'OTU ID',
             //     font: {
@@ -128,7 +138,7 @@ d3.json("../data/samples.json").then((data) => {
             //       color: '#7f7f7f'
             //     }
             //   }
-            }
+            // }
           };
 
         Plotly.newPlot("bar", barData, barLayout); 
@@ -200,6 +210,62 @@ d3.json("../data/samples.json").then((data) => {
 
         // Plot the Bubble Chart to the div tag with id "plot"
         Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+
+
+        //---------------------Gauge Chart ---------------------------//
+        metadata.forEach((meta) => {
+            if (meta.id === defaultID) {
+                Object.entries(meta).forEach(([key, value]) => {
+                    // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
+                    if (key === 'wfreq') {
+                        var wfreq = value;
+                        console.log(`Washing frequency: ${wfreq}`)
+
+                        var gaugeData = [
+                            {
+                                domain: { x: [0, 1], y: [0, 1] },
+                                value: wfreq,
+                                title: { text: "Scrubs per Week" },
+                                type: "indicator",
+                                mode: "gauge+number",
+                                marker: {
+                                    size: 12,
+                                    symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
+                                },
+                                gauge: {
+                                    axis: {range: [null, 9],
+                                             tickmode: "array", 
+                                             tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                             ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
+                                            },
+                                    bar: { color: "#4da6ff" },    
+                                    steps: [
+                                      { range: [0, 1], color: "#EBEBEB", name:'0-1'},
+                                      { range: [1, 2], color: "#E2ECDA" },
+                                      { range: [2, 3], color: "#D8EFC5" },
+                                      { range: [3, 4], color: "#C8F0A8" },
+                                      { range: [4, 5], color: "#B5F284" },
+                                      { range: [5, 6], color: "#9EF15A" },
+                                      { range: [6, 7], color: "#82F128" },
+                                      { range: [7, 8], color: "#367602" },
+                                      { range: [8, 9], color: "#204503", name: '8-9' }
+
+                                    ],
+                                }
+                            }];
+
+                        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        Plotly.newPlot('gauge', gaugeData, layout);
+
+                    };
+                });
+            }   
+        });
+
+        
+        
+        
+        
     }
 
     //--------------------------------------------------------//
@@ -207,18 +273,18 @@ d3.json("../data/samples.json").then((data) => {
     //--------------------------------------------------------//
     function optionChanged() {
         var input = +d3.select(this).property("value")
-        console.log(typeof(input))
+        // console.log(typeof(input))
 
         d3.select('#sample-metadata').html('');
         d3.select('#bar').html('');
 
         var idData = samples.filter(findId);
-        console.log(idData);
+        // console.log(idData);
 
         var sortedData = idData.sort(function (a, b){
             return b.sample_values - a.sample_values;
         });
-        console.log(sortedData)
+        // console.log(sortedData)
 
         // Slice values
         start = 0;
@@ -227,9 +293,10 @@ d3.json("../data/samples.json").then((data) => {
         //Slice data for index 0 and grab top 10 values
         var slicedSamples = sortedData[0].sample_values.slice(start, end).reverse();
         var slicedOtu = sortedData[0].otu_ids.slice(start, end).reverse();
-        console.log(slicedOtu)
+        // console.log(slicedOtu)
 
         //---------------------Bar Plot ---------------------------//
+        var randomColorBar = randomColors(slicedOtu);
         var barTrace = {
             x: slicedSamples,
             y: slicedOtu.map(function (d) {
@@ -241,12 +308,14 @@ d3.json("../data/samples.json").then((data) => {
             // }),
             type: "bar",
             orientation: "h",
+            marker: {
+                color: randomColorBar},
         };
         // console.log(trace1)
 
         // data
         barData = [barTrace];
-        console.log(barTrace)
+        // console.log(barTrace)
 
         var barLayout = {
             title: {
@@ -267,8 +336,8 @@ d3.json("../data/samples.json").then((data) => {
                 }
               },
             },
-            yaxis: {
-                 ticks: 'inside',
+            // yaxis: {
+            //      ticks: 'inside',
             //   title: {
             //     text: 'OTU ID',
             //     font: {
@@ -277,7 +346,7 @@ d3.json("../data/samples.json").then((data) => {
             //       color: '#7f7f7f'
             //     }
             //   }
-            }
+            // }
           };
 
         // Render the plot to the div tag with id "plot"
@@ -298,7 +367,7 @@ d3.json("../data/samples.json").then((data) => {
           };
 
         var randomColor = randomColors(sortedOtu);
-        console.log(randomColor);
+        // console.log(randomColor);
         var bubbleTrace = {
             x: sortedOtu,
             y: sortedSamples,
@@ -352,6 +421,58 @@ d3.json("../data/samples.json").then((data) => {
         // Render the plot to the div tag with id "plot"
         Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
 
+        //---------------------Gauge Chart ---------------------------//
+        metadata.forEach((meta) => {
+            if (meta.id === input) {
+                Object.entries(meta).forEach(([key, value]) => {
+                    // Thins conditional statement is to sytore qashing frequency to be used in the gauge chart
+                    if (key === 'wfreq') {
+                        var wfreq = value;
+                        console.log(`Washing frequency: ${wfreq}`)
+
+                        var gaugeData = [
+                            {
+                                domain: { x: [0, 1], y: [0, 1] },
+                                value: wfreq,
+                                title: { text: "Scrubs per Week" },
+                                type: "indicator",
+                                mode: "gauge+number",
+                                marker: {
+                                    size: 12,
+                                    symbol: ['line-ew',"diamond-open","line-ew","line-ew","diamond-open","line-ew"]
+                                },
+                                gauge: {
+                                    axis: {range: [null, 9],
+                                             tickmode: "array", 
+                                             tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                                             ticktext: ['0', '0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9']
+                                            },
+                                    bar: { color: "#4da6ff" },
+                                        
+                                    steps: [
+                                      { range: [0, 1], color: "#EBEBEB", name:'0-1'},
+                                      { range: [1, 2], color: "#E2ECDA" },
+                                      { range: [2, 3], color: "#D8EFC5" },
+                                      { range: [3, 4], color: "#C8F0A8" },
+                                      { range: [4, 5], color: "#B5F284" },
+                                      { range: [5, 6], color: "#9EF15A" },
+                                      { range: [6, 7], color: "#82F128" },
+                                      { range: [7, 8], color: "#367602" },
+                                      { range: [8, 9], color: "#204503", name: '8-9' }
+
+                                    ],
+                                }
+                            }];
+
+                        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+                        Plotly.newPlot('gauge', gaugeData, layout);
+
+                    };
+                });
+            }   
+        });
+
+
 
         //--------------------- Demographic Info ---------------------------//
         // Update HTML by adding metadata info
@@ -362,7 +483,7 @@ d3.json("../data/samples.json").then((data) => {
             // console.log(typeof(meta.id))
             if (meta.id === input) {
                 Object.entries(meta).forEach(([key, value]) => {
-                    console.log(`${key} : ${value}`)
+                    // console.log(`${key} : ${value}`)
                     var data = list.append('li');
                     data.attr('class', 'list-group-item');
                     data.style('font-size', '9px');
